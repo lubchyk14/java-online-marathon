@@ -75,8 +75,8 @@ class Cappuccino extends Caffee {
     @Override
     public Map<String, Integer> makeDrink() {
         this.addComponent("Water", 100)
-            .addComponent("Arabica", 20)
-            .addComponent("Milk", 50);
+                .addComponent("Arabica", 20)
+                .addComponent("Milk", 50);
         return this.getComponents();
     }
 
@@ -89,21 +89,24 @@ public class MyUtils {
 
         for (Caffee c : coffees){
             if(list.containsKey(c.getName())){
-                list.get(c.getName()).add(c.getRating());
+                Integer sum = list.get(c.getName()).get(0);
+                Integer count = list.get(c.getName()).get(1);
+                list.put(c.getName(),new ArrayList<Integer>(Arrays.asList(sum+c.getRating(),count+1)));
             }else{
                 list.put(c.getName(),new ArrayList<Integer>(Arrays.asList(c.getRating())));
+                list.get(c.getName()).add(1);
             }
         }
-        for(String s : list.keySet()){
-            ArrayList <Integer> intArray = list.get(s);
-            int sum=0;
-            for(Integer i : intArray){
-                sum+=i;
-            }
-            double size = intArray.size();
-            answer.put(s,sum/size);
+        for (String s : list.keySet()){
+            List <Integer> l = list.get(s);
+            answer.put(s, new Double(l.get(0)/l.get(1)));
         }
+
+
         return answer;
-        // Code
+        
     }
+    
 }
+
+
